@@ -4,7 +4,7 @@ import os
 import time
 from PIL import Image
 
-# To-do: add prompt for max dimension
+# To-do: add prompt for max dimension, rename file that have space to underscore
 
 virtual = 0
 debug = 1
@@ -14,14 +14,16 @@ positive = [
 			"Y", "YES", "TRUE", "PROCEED", "POSITIVE", "OF COURSE", "NAI",
 			"ΝΑΙ", "ΑΣΦΑΛΩΣ", "ΦΥΣΙΚΑ", "ΤΕΛΕΙΑ", "ΒΕΒΑΙΑ", "ΒΕΒΑΙΩΣ", "1"]
 
-filetype = re.compile('jpg$')
+filetype = re.compile('(\.((pn)|(jpe?))g$)')
 file_format = re.compile('\.[a-z]+$')
 
 def resize(image_f):
 	# use RE to isolate filename from suffix
-	filename = re.split(r'\.jpg$', image_f)[0]
+	filename = re.split(filetype, image_f)[0] # or png or jpeg, r'\.jpg$'
+	suffix = re.split(filetype, image_f)[1]
 	if debug: 
 		print(f"  Το όνομα του αρχείου είναι {filename}")
+		print(f"  Η κατάληξη του αρχείου είναι {suffix}")
 
 	image = Image.open(image_f)
 	# compare width to height
@@ -52,10 +54,10 @@ def resize(image_f):
 		image_wo = Image.new(image.mode, image.size)
 		image_wo.putdata(data)
 		image_final = image_wo.resize(dim)
-		image_final_name = filename+"_web.jpg"
+		image_final_name = filename+"_web"+suffix # attach initial file suffix
 		image_final.save(image_final_name)
 		print(f"  Σβήνεται το αρχείο {image_f}")
-		os.system(f"del {image_f}") # test this
+		os.system(f"del '{image_f}'") # work around filenames with spacebar in title
 
 # Prompt for virtual or actual copy
 bool = input("Θέλετε να γίνει πραγματική αντιγραφή των αρχείων;")
@@ -102,7 +104,7 @@ for counter, folder in enumerate(parentfolder):
 		x = filetype.search(archive)
 		if x:
 			if debug:
-				print(f' Σμίκρυνση του {archive}.')
+				print(f' Σμίκρυνση του {archive}')
 			resize(archive)
 				
 	os.chdir(parentname)
