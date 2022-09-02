@@ -50,14 +50,17 @@ def resize(image_f):
 
 	if not virtual:
 		# save image 
+		if 'n' in suffix:
+			image = image.convert('RGB')
 		data = list(image.getdata())
 		image_wo = Image.new(image.mode, image.size)
 		image_wo.putdata(data)
 		image_final = image_wo.resize(dim)
-		image_final_name = filename+"_web"+suffix # attach initial file suffix
+		suffix = '.jpg'
+		image_final_name = filename+"_web"+suffix
 		image_final.save(image_final_name)
 		print(f"  Σβήνεται το αρχείο {image_f}")
-		os.system(f"del '{image_f}'") # work around filenames with spacebar in title
+		os.remove(image_f)
 
 # Prompt for virtual or actual copy
 bool = input("Θέλετε να γίνει πραγματική αντιγραφή των αρχείων;")
