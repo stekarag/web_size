@@ -15,7 +15,7 @@ positive = [
 			"ΝΑΙ", "ΑΣΦΑΛΩΣ", "ΦΥΣΙΚΑ", "ΤΕΛΕΙΑ", "ΒΕΒΑΙΑ", "ΒΕΒΑΙΩΣ", "1"]
 
 filetype = re.compile('(\.((pn)|(jpe?))g$)')
-file_format = re.compile('\.[a-z]+$')
+file_format = re.compile('\.[A-Za-z]+$')
 
 def resize(image_f):
 	# use RE to isolate filename from suffix
