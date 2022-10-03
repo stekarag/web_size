@@ -14,7 +14,7 @@ positive = [
 			"Y", "YES", "TRUE", "PROCEED", "POSITIVE", "OF COURSE", "NAI",
 			"ΝΑΙ", "ΑΣΦΑΛΩΣ", "ΦΥΣΙΚΑ", "ΤΕΛΕΙΑ", "ΒΕΒΑΙΑ", "ΒΕΒΑΙΩΣ", "1"]
 
-filetype = re.compile('(\.((pn)|(jpe?))g$)')
+filetype = re.compile('(\.((pn)|(jpe?))g$)') # need to add support for capital file extensions
 file_format = re.compile('\.[A-Za-z]+$')
 
 def resize(image_f):
@@ -59,7 +59,7 @@ def resize(image_f):
 		suffix = '.jpg'
 		image_final_name = filename+"_web"+suffix
 		image_final.save(image_final_name)
-		print(f"  Σβήνεται το αρχείο {image_f}")
+		print(f"  Σβήνεται το αρχείο {image_f}") # weird malfunction with capital filenames
 		os.remove(image_f)
 
 # Prompt for virtual or actual copy
