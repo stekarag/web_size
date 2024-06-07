@@ -8,6 +8,7 @@ from PIL import Image
 
 virtual = 0
 debug = 1
+MAXSIZE = 800
 
 positive = [
 			"",
@@ -31,18 +32,18 @@ def resize(image_f):
 	height_f, width_f = 0, 0
 	if debug: 
 		print(f"  Αρχικές διαστάσεις αρχείου {width}x{height}")
-	# scale bigger to 800 and other accordingly
+	# scale bigger to MAXSIZE and other accordingly
 	if (width > height): 
-		proportion = (width - 800)/width
-		width_f = 800
+		proportion = (width - MAXSIZE)/width
+		width_f = MAXSIZE
 		height_f = int(height - proportion*height)
 	elif (width < height):
-		proportion = (height - 800)/height
-		height_f = 800
+		proportion = (height - MAXSIZE)/height
+		height_f = MAXSIZE
 		width_f = int(width - proportion*width)
 	else:
-		height_f = 800
-		width_f = 800
+		height_f = MAXSIZE
+		width_f = MAXSIZE
 
 	if debug: 
 		print(f"  Τελικές διαστάσεις αρχείου {width_f}x{height_f}")
@@ -63,6 +64,7 @@ def resize(image_f):
 		os.remove(image_f)
 
 # Prompt for virtual or actual copy
+print("Το πρόγραμμα ελέγχει τους υποφακέλλους για αρχεία εικόνας και τα προσαρμόζει σε διαστάσεις για το διαδύκτιο. Όλες οι εικόνες πρέπει να περιέχονται σε υποφακέλλους αλλιώς θα αγνοηθούν.")
 bool = input("Θέλετε να γίνει πραγματική αντιγραφή των αρχείων;")
 boolAns = ""
 if bool.upper() in positive:
